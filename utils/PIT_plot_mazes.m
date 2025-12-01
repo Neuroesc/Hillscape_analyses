@@ -1,0 +1,270 @@
+function PIT_plot_mazes(ax,maze,walls,col,overlap,m,l)
+%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> DESCRIPTION
+% FUNCTION  analysis function written for:
+% Grieves, Duvelle and Taube (202X) 
+%
+% USAGE:
+%       [out] = template(in) process with default settings
+% 
+%       [out] = template(in,optional1) process using optional argument 1
+% 
+%       [out] = template(___,Name,Value,...) process with Name-Value pairs used to control aspects 
+%       of the process
+% 
+%       Parameters include:
+% 
+%       'param1'          -   (default = X) Scalar value, parameter to do something
+% 
+%       'param2'          -   (default = X) Scalar value, parameter to do something
+% 
+% INPUT:
+%       in    - input as a vector
+%
+% OUTPUT:
+%       out   - output as a vector
+%
+% EXAMPLES:
+%       % run function using default values
+%       out = template(in,varargin)
+%
+% See also: GIT_audit
+
+% HISTORY:
+% version 1.0.0, Release 16/02/23 Code conception
+%
+% Author: Roddy Grieves
+% Dartmouth College, Moore Hall
+% eMail: roddy.m.grieves@dartmouth.edu
+% Copyright 2021 Roddy Grieves
+
+%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Heading 3
+%% >>>>>>>>>>>>>>>>>>>> Heading 2
+%% >>>>>>>>>> Heading 1
+%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> INPUT ARGUMENTS CHECK
+%% Parse inputs
+    if ~exist('walls','var') || isempty(walls)
+        walls = 1; % no walls or cue card are shown
+    end
+    if ~exist('col','var') || isempty(col)
+        col = [.9 .9 .9]; % no walls or cue card are shown
+    end
+    if ~exist('overlap','var') || isempty(overlap)
+        overlap = true; % no walls or cue card are shown
+    end
+    if ~exist('l','var') || isempty(l)
+        l = true; % no walls or cue card are shown
+    end
+
+%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> FUNCTION BODY
+%% >>>>>>>>>> 
+    switch maze
+        case {1} % arena
+            x = 0:10:3000;
+            y = 0:10:1500;
+            
+            [yy,xx] = ndgrid(y,x);
+            zz = zeros(size(yy));
+
+            if ~exist('m','var') || isempty(m)
+                m = zz;
+                dynamic_face = 0;                                
+            else
+                m = imresize(m,size(zz),'bilinear');
+                col = m;
+                dynamic_face = 1;
+            end
+            
+            if ~overlap
+                surf(ax,xx,yy,zz,m,'EdgeColor','none'); hold on;
+            else
+                ps = linspace(0,max(xx(:)),7);
+                i = knnsearch(ps(:),x(:));
+                point_mat = repmat(i(:)',size(xx,1),1);
+                % trough_mat = ismember(point_mat,1:2:7);
+                trough_mat = ones(size(xx));          
+                if dynamic_face
+                    surf(ax,xx,yy,zz,m,'EdgeColor','none'); hold on;
+                else
+                    surf(ax,xx,yy,zz,m,'EdgeColor','none','FaceColor',col,'AlphaData',trough_mat,'FaceAlpha','flat'); hold on;
+                end
+            end
+
+            daspect(ax,[1 1 1])
+            % camlight right
+            if l
+                lighting(ax,'phong')
+                camlight left      
+            end                        
+            ax.Projection = 'perspective';
+            % colormap(ax,'turbo')
+            % ax.CLim = [0 1];
+
+            axis off
+            p = plotcube([max(x) max(y) 600],[0 0 0],0,'k');
+
+        case {2} % hills
+            x = 0:10:3000;
+            y = 0:10:1500;
+            F = 0.299;
+            wav = cos(2*pi*F*x+pi);
+            wav = ((wav+1)./2)*450;
+            
+            [yy,xx] = ndgrid(y,x);
+            zz = repmat(wav,size(xx,1),1);
+            
+            if ~exist('m','var') || isempty(m)
+                m = zz;
+                dynamic_face = 0;                
+            else
+                m = imresize(m,size(zz),'bilinear');
+                col = m;
+                dynamic_face = 1;
+            end
+
+            if ~overlap
+                surf(ax,xx,yy,zz,m,'EdgeColor','none'); hold on;
+            else
+                ps = linspace(0,max(xx(:)),7);
+                i = knnsearch(ps(:),x(:));
+                point_mat = repmat(i(:)',size(xx,1),1);
+                % trough_mat = double(ismember(point_mat,1:2:7));
+                % trough_mat(trough_mat==0) = 0.1;
+                trough_mat = ones(size(xx));
+                if dynamic_face
+                    surf(ax,xx,yy,zz,m,'EdgeColor','none'); hold on;
+                else                
+                    surf(ax,xx,yy,zz,'EdgeColor','none','FaceColor',col,'AlphaData',trough_mat,'FaceAlpha','flat','AlphaDataMapping','none'); hold on;
+                end
+            end
+            patch(ax,[x fliplr(x)],[zeros(size(wav)) zeros(size(wav))],[wav zeros(size(wav))],[.5 .5 .5],'EdgeColor','none');
+            patch(ax,[x fliplr(x)],[ones(size(wav)) ones(size(wav))].*max(y(:)),[wav zeros(size(wav))],[.5 .5 .5],'EdgeColor','none');
+
+            daspect(ax,[1 1 1])
+            if l
+                lighting(ax,'phong')
+                camlight left      
+            end
+            ax.Projection = 'perspective';
+            % colormap(ax,'turbo')
+            % ax.CLim = [0 max(zz(:))];
+% keyboard
+            axis off
+
+            p = plotcube([max(x) max(y) 600],[0 0 0],0,'k');
+% keyboard
+        case {3} % hemisphere
+            x = 0:10:3000;
+            y = 0:10:1500;
+            
+            [yy,xx] = ndgrid(y,x);
+            zz = zeros(size(yy));
+            
+            if ~overlap
+                surf(ax,xx,yy,zz,zz,'EdgeColor','none'); hold on;
+            else
+                ps = linspace(0,max(xx(:)),7);
+                i = knnsearch(ps(:),x(:));
+                point_mat = repmat(i(:)',size(xx,1),1);
+                trough_mat = ismember(point_mat,1:2:7);
+                surf(ax,xx,yy,zz,'EdgeColor','none','FaceColor',col,'AlphaData',trough_mat,'FaceAlpha','flat'); hold on;
+            end
+
+            daspect(ax,[1 1 1])
+            % camlight right
+            % lighting(ax,'phong')
+            ax.Projection = 'perspective';
+            colormap(ax,'turbo')
+
+            axis off
+            p = plotcube([max(x) max(y) 600],[0 0 0],0,'k');
+
+            [X,Y,Z] = sphere(64);
+            siz = 550;
+            X = (X.*siz) + mean(x(:));
+            Y = (Y.*siz) + mean(y(:));
+            Z = (Z.*siz);
+            Z(Z<0) = 0;
+
+            surf(ax,X,Y,Z,Z,'EdgeColor','none'); hold on;
+            ax.CLim = [0 max(Z(:))];
+
+        case {4} % saddle
+            x = 0:10:3000;
+            y = 0:10:1500;  
+            [yy,xx] = ndgrid(y,x);
+
+            xt = linspace(-100,100,length(x));
+            yt = linspace(-100,100,length(y));
+            [yyt,xxt] = ndgrid(yt,xt);
+            zz = xxt.^2-yyt.^2;
+            zz = zz - min(zz(:));
+            zz = zz ./ max(zz(:));
+            zz = zz .* 600;
+            % zz = normalize(xxt.^2-yyt.^2,'range').*450;
+
+            if ~overlap
+                surf(ax,xx,yy,zz,zz,'EdgeColor','none'); hold on;
+            else
+                ps = linspace(0,max(xx(:)),7);
+                i = knnsearch(ps(:),x(:));
+                point_mat = repmat(i(:)',size(xx,1),1);
+                trough_mat = ismember(point_mat,1:2:7);
+                surf(ax,xx,yy,zz,'EdgeColor','none','FaceColor',col,'AlphaData',trough_mat,'FaceAlpha','flat'); hold on;
+            end
+
+            daspect(ax,[1 1 1])
+            % camlight right
+            % lighting(ax,'phong')
+            ax.Projection = 'perspective';
+            colormap(ax,'turbo')
+            ax.CLim = [0 max(zz(:))];
+
+            axis off
+            p = plotcube([max(x) max(y) 600],[0 0 0],0,'k');
+
+
+
+% keyboard
+
+
+
+
+    end
+
+    if walls==2 % we want to plot back walls and cue card
+        % back long wall
+        z = [0 600];
+        [zz,xx] = ndgrid(z,x);
+        yy = ones(size(xx)).*max(y);
+        s1 = surf(ax,xx,yy,zz,'EdgeColor','none','FaceColor','none','FaceAlpha',0.1); hold on;
+
+        % back short wall
+        z = [0 600];
+        [zz,yy] = ndgrid(z,y);
+        xx = ones(size(yy)).*max(x);
+        s2 = surf(ax,xx,yy,zz,'EdgeColor','none','FaceColor','none','FaceAlpha',0.1); hold on;
+
+        % white cue card
+        z = [0 600];
+        y = 400:10:800;
+        [zz,yy] = ndgrid(z,y);
+        xx = ones(size(yy)).*max(x)-0.1;
+        s2 = surf(ax,xx,yy,zz,'EdgeColor','none','FaceColor',[0 0 0],'FaceAlpha',1); hold on;
+    end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
