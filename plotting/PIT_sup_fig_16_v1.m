@@ -1,19 +1,32 @@
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> DESCRIPTION
-% FUNCTION  analysis function written for:
-% Grieves, Duvelle and Taube (2024) 
+% PIT_supp_fig_16_v1
+% Fig S1 for Grieves, Duvelle and Jeffery (2026) Hippocampal place cells map
+% terrain geometry independently of behaviour
+% Maze schematics and photos 
+% 
+% SEE ALSO GIT_audit
 
-% HISTORY:
-% version 1.0.0, Release 16/02/23 Code conception
+% HISTORY
 %
-% Author: Roddy Grieves
-% Dartmouth College, Moore Hall
-% eMail: roddy.m.grieves@dartmouth.edu
-% Copyright 2021 Roddy Grieves
+% version 1.0.0, Release 06/02/23 Code conception
+% version 2.0.0, Release 15/04/26 Publication release
+%
+% NOTES
+% 
+% 1. This script require the summary dataset:
+%   https://doi.org/10.5281/zenodo.17634454
+%
+% 2. This script is intended to be run via the control function GIT_audit
+%
+% AUTHOR 
+%
+% Roddy Grieves
+% University of Glasgow, Sir James Black Building
+% Neuroethology and Spatial Cognition Lab
+% eMail: roddy.grieves@glasgow.ac.uk
+% Copyright 2026 Roddy Grieves
 
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Heading 3
-%% >>>>>>>>>>>>>>>>>>>> Heading 2
-%% >>>>>>>>>> Heading 1
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> INPUT ARGUMENTS CHECK
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INPUTS
+%%%%%%%%%%%%%%%% ARGUMENT CHECK
 %% Parse inputs
     % Create figure
     fig_now = figure('Units','pixels','Position',[50 50 210.*3 297.*3],'visible','on');
@@ -21,8 +34,8 @@
     set(gcf,'color','w'); % makes the background colour white
     fs = [15 10];
 
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> FUNCTION BODY
-%% >>>>>>>>>> Schematics
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FUNCTION BODY
+%%%%%%%%%%%%%%%% Schematics
     xnow = 50;
     ynow = 650;
     xbuff = 50;
@@ -46,7 +59,7 @@
         PIT_plot_mazes(ax2,2,2)
         % title(maze_names{2},'FontSize',10,'FontWeight','normal')
 
-%% >>>>>>>>>> Photos
+%%%%%%%%%%%%%%%% Photos
     xnow = 50;
     ynow = ynow-150;
     xbuff = 50;
@@ -68,7 +81,7 @@
         imshow(im);
 
         % keyboard
-%% >>>>>>>>>> Save the overall figure
+%%%%%%%%%%%%%%%% Save the overall figure
     if 1
         fname = [config.fig_dir '\Fig S1a.png']; 
         if fast_figs

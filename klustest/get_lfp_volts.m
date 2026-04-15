@@ -60,7 +60,7 @@ function [lfpv,t,Fs,lfp_h,set_h] = get_lfp_volts(fname,varargin)
 
 %% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> FUNCTION BODY
     % load the LFP data from the file
-    [lfp,t,Fs,lfp_h] = get_lfp(config.fname);
+    [lfp,t,Fs,lfp_h] = get_lfp(config.fname,'ds',config.ds);
 
     % Convert LFP - work out which eeg channel this is
     [a,b,c] = fileparts(config.fname);

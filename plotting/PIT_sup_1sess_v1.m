@@ -1,29 +1,31 @@
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> DESCRIPTION
-% PIT_fig_1_v1  figure script written for:
-% Grieves, Duvelle and Taube (202X) 
+% PIT_supp_1sess_v1
+% Fig S13 for Grieves, Duvelle and Jeffery (2026) Hippocampal place cells map
+% terrain geometry independently of behaviour
+% Reviewer requested, single session per rat
+% 
+% SEE ALSO GIT_audit
+
+% HISTORY
 %
-% See also: GIT_audit
-
-% HISTORY:
-% version 1.0.0, Release 06/11/23 Code conception
+% version 1.0.0, Release 06/02/23 Code conception
+% version 2.0.0, Release 15/04/26 Publication release
 %
-% Author: Roddy Grieves
-% Dartmouth College, Moore Hall
-% eMail: roddy.m.grieves@dartmouth.edu
-% Copyright 2023 Roddy Grieves
+% NOTES
+% 
+% 1. This script require the summary dataset:
+%   https://doi.org/10.5281/zenodo.17634454
+%
+% 2. This script is intended to be run via the control function GIT_audit
+%
+% AUTHOR 
+%
+% Roddy Grieves
+% University of Glasgow, Sir James Black Building
+% Neuroethology and Spatial Cognition Lab
+% eMail: roddy.grieves@glasgow.ac.uk
+% Copyright 2026 Roddy Grieves
 
-
-% correlation cliffs delta
-% field size and distance from boundaries
-% percentage environment covered by fields
-% range of field sizes (CV?) shuffle?
-% nfields vs field size scatter
-% nfields vs sum area of fields scatter
-
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Heading 3
-%% >>>>>>>>>>>>>>>>>>>> Heading 2
-%% >>>>>>>>>> Heading 1
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> INPUT ARGUMENTS CHECK
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INPUT ARGUMENTS CHECK
 %% Parse inputs
     % Create figure
     fig_now = figure('Units','pixels','Position',[50 50 210.*3 297.*3],'visible','on');
@@ -31,7 +33,7 @@
     set(gcf,'color','w'); % makes the background colour white
     fs = [15 10];
 
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> FUNCTION BODY
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FUNCTION BODY
     animals = clumaa.rat;
     clumaa.date = cell(size(clumaa,1),1);
     for ii = 1:size(clumaa,1)
@@ -65,7 +67,7 @@
         pidx_ds(ismember(animals,result.Animal(rr)) & ismember(sessions,result.Session(rr)) & pidx) = true;
     end
 
-%% >>>>>>>>>> Fields per m2
+%%%%%%%%%%%%%%%% Fields per m2
     xnow = 50;
     ynow = 700;
     xbuff = 60;
@@ -121,7 +123,7 @@
             axt.YLim = [0 1];        
             [result1,result2] = plotsigbrackets(ds,gs,'bracket_text_y_gap_coeff',-1.4,'bracket_y_base',axt.YLim(2));
 
-%% >>>>>>>>>> field radius
+%%%%%%%%%%%%%%%% field radius
     % create axis
     ax2 = axes('Units','pixels','Position',[ax1.Position(1)+ax1.Position(3)+xbuff ax1.Position(2) ax1.Position(3) ax1.Position(4)]);
         ah = add_panel_title('B',sprintf(''),'yoffset',-10,'xoffset',-10,'width',400,'fontsize',fs);                
@@ -165,7 +167,7 @@
         % disp(sprintf('z = %.3f, p = %.1e, Cliff''s delta = %.2f, permutation z-test',z,p,obs))
         % [median(v1(:),"all",'omitmissing') median(v2(:),"all",'omitmissing')];
 
-%% >>>>>>>>>> spatial information content
+%%%%%%%%%%%%%%%% spatial information content
     xnow = xnow+155;
 
     % create axis
@@ -204,7 +206,7 @@
             N = [sum(~isnan(v1(:))) sum(~isnan(v2a(:))) sum(~isnan(v2b(:))) sum(~isnan(v3(:)))];
 
 
-%% >>>>>>>>>> repetition score
+%%%%%%%%%%%%%%%% repetition score
     % create axis
     ax4 = axes('Units','pixels','Position',[ax3.Position(1)+ax3.Position(3)+xbuff ax3.Position(2) ax3.Position(3) ax3.Position(4)]);
         ah = add_panel_title('D',sprintf(''),'yoffset',-10,'xoffset',-10,'width',400,'fontsize',fs);                
@@ -242,7 +244,7 @@
             [result1,result2] = plotsigbrackets(ds,gs,'bracket_text_y_gap_coeff',-1.4);
             % N = [sum(~isnan(v1(:))) sum(~isnan(v2a(:))) sum(~isnan(v2b(:))) sum(~isnan(v3(:)))];
 
-%% >>>>>>>>>> Average field anisotropy
+%%%%%%%%%%%%%%%% Average field anisotropy
     % collect data
     ucis = unique(clumaa.uci(pidx_ds));
     datn = cell(1,3);
@@ -431,7 +433,7 @@
         end
         colormap(ax2e,c);
 
-%% >>>>>>>>>> Behaviour anisotropy map 
+%%%%%%%%%%%%%%%% Behaviour anisotropy map 
     ynow = ynow-140;
 
     session_subset = unique(clumaa.pos_idx(pidx_ds));
@@ -502,7 +504,7 @@
         text(1,0.5,sprintf(' %.1f',ax1.CLim(2)),'HorizontalAlignment','left','VerticalAlignment','middle','FontSize',axc.FontSize,'Units','normalized')
         text(-0.3,1.5,sprintf('Anisotropy score:'),'HorizontalAlignment','right','VerticalAlignment','middle','FontSize',axc.FontSize,'Units','normalized')
 
-%% >>>>>>>>>> repetition (autocorrelation plots)
+%%%%%%%%%%%%%%%% repetition (autocorrelation plots)
     xnow = 45;
     ynow = ynow-170;
     xbuff = 25;
@@ -616,7 +618,7 @@
         text(1,0.5,sprintf(' %.1f',ax2.CLim(2)),'HorizontalAlignment','left','VerticalAlignment','middle','FontSize',axc.FontSize,'Units','normalized')
         text(0.5,1,sprintf('Correlation'),'HorizontalAlignment','center','VerticalAlignment','bottom','FontSize',axc.FontSize,'Units','normalized')
 
-%% >>>>>>>>>> Elongation vs distance from closest boundary
+%%%%%%%%%%%%%%%% Elongation vs distance from closest boundary
     % collect real data
     if 1
         ucis = unique(clumaa.uci(pidx_ds));
@@ -874,7 +876,7 @@
 %         [P,T,STATS,TERMS] = anovan(d,[g1 g2],'display','on','varnames',{'maze','distance'},'model','full');
 % keyboard
 
-%% >>>>>>>>>> Save the overall figure
+%%%%%%%%%%%%%%%% Save the overall figure
     if 1
         fname = [config.fig_dir '\Fig S14.png']; 
         if fast_figs
@@ -890,10 +892,6 @@
         end
         close(gcf);   
     end
-
-return
-
-
 
 
 

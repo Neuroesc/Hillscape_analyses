@@ -1,29 +1,32 @@
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> DESCRIPTION
-% PIT_fig_1_v1  figure script written for:
-% Grieves, Duvelle and Taube (202X) 
-%
-% See also: GIT_audit
+% PIT_fig_2_v1
+% Fig 2 for Grieves, Duvelle and Jeffery (2026) Hippocampal place cells map
+% terrain geometry independently of behaviour
+% Correlations, place fields per cell, field radius
+% 
+% SEE ALSO GIT_audit
 
-% HISTORY:
+% HISTORY
+%
 % version 1.0.0, Release 06/11/23 Code conception
+% version 2.0.0, Release 15/04/26 Publication release
 %
-% Author: Roddy Grieves
-% Dartmouth College, Moore Hall
-% eMail: roddy.m.grieves@dartmouth.edu
-% Copyright 2023 Roddy Grieves
+% NOTES
+% 
+% 1. This script require the summary dataset:
+%   https://doi.org/10.5281/zenodo.17634454
+%
+% 2. This script is intended to be run via the control function GIT_audit
+%
+% AUTHOR 
+%
+% Roddy Grieves
+% University of Glasgow, Sir James Black Building
+% Neuroethology and Spatial Cognition Lab
+% eMail: roddy.grieves@glasgow.ac.uk
+% Copyright 2026 Roddy Grieves
 
-
-% correlation cliffs delta
-% field size and distance from boundaries
-% percentage environment covered by fields
-% range of field sizes (CV?) shuffle?
-% nfields vs field size scatter
-% nfields vs sum area of fields scatter
-
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Heading 3
-%% >>>>>>>>>>>>>>>>>>>> Heading 2
-%% >>>>>>>>>> Heading 1
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> INPUT ARGUMENTS CHECK
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INPUTS
+%%%%%%%%%%%%%%%% ARGUMENT CHECK
 %% Parse inputs
     % Create figure
     fig_now = figure('Units','pixels','Position',[50 50 210.*3 297.*3],'visible','on');
@@ -31,11 +34,11 @@
     set(gcf,'color','w'); % makes the background colour white
     fs = [15 10];
 
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> FUNCTION BODY
-%% >>>>>>>>>> Check that correlations and shuffles are complete
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FUNCTION BODY
+%%%%%%%%%%%%%%%% Check that correlations and shuffles are complete
     clumaa = PIT_correlations(config,pidx,clumaa,posdata,0);
 
-%% >>>>>>>>>> Example cells (between session stability)
+%%%%%%%%%%%%%%%% Example cells (between session stability)
     xnow = 30;
     ynow = 780;
     xvec = [xnow xnow];
@@ -117,7 +120,7 @@
         text(0.5,1,sprintf('Max'),'HorizontalAlignment','center','VerticalAlignment','bottom','FontSize',axc.FontSize,'Units','normalized')
         text(0.5,0,sprintf('0 Hz'),'HorizontalAlignment','center','VerticalAlignment','top','FontSize',axc.FontSize,'Units','normalized')
 
-%% >>>>>>>>>> Between session correlation results
+%%%%%%%%%%%%%%%% Between session correlation results
     xnow = xnow+30;
     ynow = ynow-210;
 
@@ -189,7 +192,7 @@
         % disp(sprintf('arena 1&hills vs shuffle: z = %.3f, p = %.1e, Cliff''s delta = %.2f, permutation z-test',z,p,obs))
         % % keyboard
 
-%% >>>>>>>>>> Example cell (within session stability)
+%%%%%%%%%%%%%%%% Example cell (within session stability)
     xnow = xnow+310;
     ynow = ynow+150;
     
@@ -268,7 +271,7 @@
         % text
         text(-0.02,0.5,sprintf('2nd half'),'Units','normalized','HorizontalAlignment','center','FontSize',8,'Color','k','VerticalAlignment','bottom','rotation',90)
 
-%% >>>>>>>>>> Within session correlation results
+%%%%%%%%%%%%%%%% Within session correlation results
     ynow = ynow-150;
     % xnow = xnow;
     fname = [config.data_out_dir 'PIT_correlations_within_shuffles.mat'];
@@ -338,7 +341,7 @@
         % % median(v1,"all",'omitmissing')
         % keyboard
 % return
-%% >>>>>>>>>> Firing rates
+%%%%%%%%%%%%%%%% Firing rates
     xnow = 50;
     ynow = ynow-210;
 
@@ -379,7 +382,7 @@
         [r,p] = corr(fst(:,1),fst(:,3),'rows','pairwise','type','Pearson');    
         text(-0.02,1.02,sprintf('%s vs %s: r = %.1f',maze_names{1},maze_names{3},r),'FontSize',8,'HorizontalAlignment','left','Units','normalized','VerticalAlignment','bottom','Color','#012030')
 
-%% >>>>>>>>>> Fields per cell
+%%%%%%%%%%%%%%%% Fields per cell
     xnow = xnow+175;
 
     % create axis
@@ -429,7 +432,7 @@
         % disp(sprintf('D = %.3f, p = %.1e, two-sample Kolmogorov-Smirnov test',k,p))
         % [median(v1(:),"all",'omitmissing') median(v2a(:),"all",'omitmissing')];
 
-%% >>>>>>>>>> Fields per m2
+%%%%%%%%%%%%%%%% Fields per m2
     xnow = xnow+145;
 
     % create axis
@@ -482,8 +485,7 @@
             axt.YLim = [0 1];        
             [result1,result2] = plotsigbrackets(ds,gs,'bracket_text_y_gap_coeff',-1.4,'bracket_y_base',axt.YLim(2));
 
-% keyboard
-%% >>>>>>>>>> Example cell (multiple fields)
+%%%%%%%%%%%%%%%% Example cell (multiple fields)
     xnow = xnow+120;
     
     uci = 'RG11_220520_t2_c6';
@@ -606,7 +608,7 @@
 %         % [r,p] = corr(fs(:,1),fs(:,3),'rows','pairwise','type','Pearson');    
 %         % text(0,1.02,sprintf('Arena 1 vs Arena 2: r = %.1f',r),'FontSize',8,'HorizontalAlignment','left','Units','normalized','VerticalAlignment','bottom','Color','#012030')
 
-%% >>>>>>>>>> field radius
+%%%%%%%%%%%%%%%% field radius
     xnow = 50;
     ynow = ynow-215;
 
@@ -652,7 +654,7 @@
         % disp(sprintf('z = %.3f, p = %.1e, Cliff''s delta = %.2f, permutation z-test',z,p,obs))
         % [median(v1(:),"all",'omitmissing') median(v2(:),"all",'omitmissing')];
 
-%% >>>>>>>>>> field radius schematic
+%%%%%%%%%%%%%%%% field radius schematic
     xnow = xnow+135;
     ynow = ynow-15;
     mf = posdata.maze_frame{1}; 
@@ -775,7 +777,7 @@
 %         text(0,0.5,sprintf('%.1f ',ax1.CLim(1)),'HorizontalAlignment','right','VerticalAlignment','middle','FontSize',axc.FontSize,'Units','normalized')
 %         text(1,0.5,sprintf(' %.1f Hz',ax1.CLim(2)),'HorizontalAlignment','left','VerticalAlignment','middle','FontSize',axc.FontSize,'Units','normalized')
 
-%% >>>>>>>>>> field coverage
+%%%%%%%%%%%%%%%% field coverage
     xnow = xnow+160;
     ynow = ynow+15;
 
@@ -833,7 +835,7 @@
             axt.YLim = [0 1];
             [result1,result2] = plotsigbrackets(ds,gs,'bracket_text_y_gap_coeff',-1.4,'plot_omnibus',0);
 
-%% >>>>>>>>>> spatial information content
+%%%%%%%%%%%%%%%% spatial information content
     xnow = xnow+155;
 
     % create axis
@@ -871,7 +873,7 @@
             N = [sum(~isnan(v1(:))) sum(~isnan(v2a(:))) sum(~isnan(v2b(:))) sum(~isnan(v3(:)))];
 
             % keyboard
-%% >>>>>>>>>> Save the overall figure
+%%%%%%%%%%%%%%%% Save the overall figure
     if 1
         fname = [config.fig_dir '\Fig 2.png']; 
         if fast_figs
@@ -887,9 +889,6 @@
         end
         close(gcf);   
     end
-
-return
-
 
 
 

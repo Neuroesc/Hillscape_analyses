@@ -1,21 +1,31 @@
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> DESCRIPTION
-% PIT_fig_1_v1  figure script written for:
-% Grieves, Duvelle and Taube (202X) 
-%
-% See also: GIT_audit
+% PIT_supp_fig_8_v1
+% Fig S8 for Grieves, Duvelle and Jeffery (2026) Hippocampal place cells map
+% terrain geometry independently of behaviour
+% Example trajectory, movement direction and head direction sampling  
+% 
+% SEE ALSO GIT_audit
 
-% HISTORY:
-% version 1.0.0, Release 06/11/23 Code conception
+% HISTORY
 %
-% Author: Roddy Grieves
-% Dartmouth College, Moore Hall
-% eMail: roddy.m.grieves@dartmouth.edu
-% Copyright 2023 Roddy Grieves
+% version 1.0.0, Release 06/02/23 Code conception
+% version 2.0.0, Release 15/04/26 Publication release
+%
+% NOTES
+% 
+% 1. This script require the summary dataset:
+%   https://doi.org/10.5281/zenodo.17634454
+%
+% 2. This script is intended to be run via the control function GIT_audit
+%
+% AUTHOR 
+%
+% Roddy Grieves
+% University of Glasgow, Sir James Black Building
+% Neuroethology and Spatial Cognition Lab
+% eMail: roddy.grieves@glasgow.ac.uk
+% Copyright 2026 Roddy Grieves
 
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Heading 3
-%% >>>>>>>>>>>>>>>>>>>> Heading 2
-%% >>>>>>>>>> Heading 1
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> INPUT ARGUMENTS CHECK
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INPUT ARGUMENTS CHECK
 %% Parse inputs
     % Create figure
     fig_now = figure('Units','pixels','Position',[50 50 210.*3 297.*3],'visible','on');
@@ -23,8 +33,8 @@
     set(gcf,'color','w'); % makes the background colour white
     fs = [15 10];
 
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> FUNCTION BODY
-%% >>>>>>>>>> Behaviour anisotropy example trajectory
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FUNCTION BODY
+%%%%%%%%%%%%%%%% Behaviour anisotropy example trajectory
     xnow = -5;
     ynow = 720;
     xbuff = 210;
@@ -145,7 +155,7 @@
 %% check 3D heading maps exist
     [clumaa,posdata] = PIT_3D_heading(config,clumaa,posdata,0);
 
-%% >>>>>>>>>> Directional sampling in each maze, 3D HD heatmaps
+%%%%%%%%%%%%%%%% Directional sampling in each maze, 3D HD heatmaps
     xnow = 50;
     ynow = ynow-100;
     ybuff = 150;
@@ -228,7 +238,7 @@
         ax3b.XTick = ax1b.XTick;
         ax3b.YTick = -90:45:90;       
 
-%% >>>>>>>>>> Directional sampling in each maze, averaged
+%%%%%%%%%%%%%%%% Directional sampling in each maze, averaged
     xnow = xnow;
     ynow = ynow-155;
     ysiz2 = 60;
@@ -412,7 +422,7 @@
         %     line([90 90],ax1c.YLim,'Color','k','LineStyle',':');
         %     line([-90 -90],ax1c.YLim,'Color','k','LineStyle',':');  
 
-%% >>>>>>>>>> Directional sampling in each maze, 3D HD heatmaps
+%%%%%%%%%%%%%%%% Directional sampling in each maze, 3D HD heatmaps
     xnow = 50;
     ynow = ynow-170;
     ybuff = 150;
@@ -495,7 +505,7 @@
         text(1,0.5,sprintf(' %.f',ax1b.CLim(2)),'HorizontalAlignment','left','VerticalAlignment','middle','FontSize',axc.FontSize,'Units','normalized')
         text(0.5,1,sprintf('Dwell time'),'HorizontalAlignment','center','VerticalAlignment','bottom','FontSize',axc.FontSize,'Units','normalized')
 
-%% >>>>>>>>>> Directional sampling in each maze, averaged
+%%%%%%%%%%%%%%%% Directional sampling in each maze, averaged
     xnow = xnow;
     ynow = ynow-155;
     ysiz2 = 60;
@@ -680,7 +690,7 @@
         %     line([-90 -90],ax1c.YLim,'Color','k','LineStyle',':');  
 
         % keyboard
-%% >>>>>>>>>> Save the overall figure
+%%%%%%%%%%%%%%%% Save the overall figure
     if 1
         fname = [config.fig_dir '\Fig S7.png']; 
         if fast_figs

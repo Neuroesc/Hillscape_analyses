@@ -1,45 +1,32 @@
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> DESCRIPTION
-% FUNCTION  analysis function written for:
-% Grieves, Duvelle and Taube (202X) 
-%
-% USAGE:
-%       [out] = template(in) process with default settings
+% PIT_fig_8_v1
+% Fig 5 for Grieves, Duvelle and Jeffery (2026) Hippocampal place cells map
+% terrain geometry independently of behaviour
+% BVC results, Field to wall, angle plots
 % 
-%       [out] = template(in,optional1) process using optional argument 1
-% 
-%       [out] = template(___,Name,Value,...) process with Name-Value pairs used to control aspects 
-%       of the process
-% 
-%       Parameters include:
-% 
-%       'param1'          -   (default = X) Scalar value, parameter to do something
-% 
-%       'param2'          -   (default = X) Scalar value, parameter to do something
-% 
-% INPUT:
-%       in    - input as a vector
-%
-% OUTPUT:
-%       out   - output as a vector
-%
-% EXAMPLES:
-%       % run function using default values
-%       out = template(in,varargin)
-%
-% See also: GIT_audit
+% SEE ALSO GIT_audit
 
-% HISTORY:
-% version 1.0.0, Release 16/02/23 Code conception
+% HISTORY
 %
-% Author: Roddy Grieves
-% Dartmouth College, Moore Hall
-% eMail: roddy.m.grieves@dartmouth.edu
-% Copyright 2021 Roddy Grieves
+% version 1.0.0, Release 06/02/23 Code conception
+% version 2.0.0, Release 15/04/26 Publication release
+%
+% NOTES
+% 
+% 1. This script require the summary dataset:
+%   https://doi.org/10.5281/zenodo.17634454
+%
+% 2. This script is intended to be run via the control function GIT_audit
+%
+% AUTHOR 
+%
+% Roddy Grieves
+% University of Glasgow, Sir James Black Building
+% Neuroethology and Spatial Cognition Lab
+% eMail: roddy.grieves@glasgow.ac.uk
+% Copyright 2026 Roddy Grieves
 
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Heading 3
-%% >>>>>>>>>>>>>>>>>>>> Heading 2
-%% >>>>>>>>>> Heading 1
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> INPUT ARGUMENTS CHECK
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INPUTS
+%%%%%%%%%%%%%%%% ARGUMENT CHECK
 %% Parse inputs
     % Create figure
     fig_now = figure('Units','pixels','Position',[50 50 210.*3 297.*3],'visible','on');
@@ -50,7 +37,7 @@
 
     sem = @(x,dim) std(x,0,dim,'omitmissing') ./ sqrt(sum(~isnan(x),dim));
 
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> FUNCTION BODY
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FUNCTION BODY
     % collect real data
     if ~exist('model_maps','var') || 0
         ucis = unique(clumaa.uci(pidx));
@@ -216,7 +203,7 @@
         end
     end
 
-%% >>>>>>>>>> Example cells
+%%%%%%%%%%%%%%%% Example cells
     xnow = 20;
     ynow = 780;
     xsiz = [90, 10]; % size, buffer
@@ -339,7 +326,7 @@
     end
 % return
 
-%% >>>>>>>>>> Repetition score
+%%%%%%%%%%%%%%%% Repetition score
     xnow = 330;
     ynow = ynow-325;  
 
@@ -409,7 +396,7 @@
             % N = [sum(~isnan(v1(:))) sum(~isnan(v2a(:))) sum(~isnan(v2b(:))) sum(~isnan(v3(:)))];
 % keyboard
 
-%% >>>>>>>>>> Remapping between arena and hills
+%%%%%%%%%%%%%%%% Remapping between arena and hills
     var = 'between_session_stability';
     v1 = clumaa.(var)(pidx & clumaa.partn==1,2); % arena 1 vs arena 2
     v2 = clumaa.(var)(pidx & clumaa.partn==1,1); % arena 1 vs hills
@@ -490,7 +477,7 @@
         %     axt.YLim = [0 1];        
         %     [result1,result2] = plotsigbrackets(ds,gs,'bracket_text_y_gap_coeff',-1.4,'bracket_y_base',axt.YLim(2)*1.1,'plot_omnibus',1,'omnibus_text_y_gap_coeff',2);
 % keyboard
-%% >>>>>>>>>> repetition (autocorrelation plots)
+%%%%%%%%%%%%%%%% repetition (autocorrelation plots)
     xnow = 45;
     ynow = ynow-130;
     xbuff = 25;
@@ -608,7 +595,7 @@
         text(1,0.5,sprintf(' %.1f',ax2.CLim(2)),'HorizontalAlignment','left','VerticalAlignment','middle','FontSize',axc.FontSize,'Units','normalized')
         text(0.5,1,sprintf('Correlation'),'HorizontalAlignment','center','VerticalAlignment','bottom','FontSize',axc.FontSize,'Units','normalized')
 
-%% >>>>>>>>>> Field area vs distance from closest boundary
+%%%%%%%%%%%%%%%% Field area vs distance from closest boundary
     xnow = ax1r.Position(1);
     ynow = ax1r.Position(2)-200;
 
@@ -702,7 +689,7 @@
 %         g2 = [idx1(:); idx2(:)];
 %         [P,T,STATS,TERMS] = anovan(d,[g1 g2],'display','on','varnames',{'maze','distance'},'model','full');
 % keyboard
-%% >>>>>>>>>> Elongation vs distance from closest boundary
+%%%%%%%%%%%%%%%% Elongation vs distance from closest boundary
     xnow = xnow+160;
     ynow = ynow;
 
@@ -795,7 +782,7 @@
 %         [P,T,STATS,TERMS] = anovan(d,[g1 g2],'display','on','varnames',{'maze','distance'},'model','full');
 % keyboard
 
-%% >>>>>>>>>> Field-to-wall angle vs distance from closest boundary
+%%%%%%%%%%%%%%%% Field-to-wall angle vs distance from closest boundary
     xnow = xnow-430;
     ynow = ynow-200;
 
@@ -926,7 +913,7 @@
 %         ax1.XTick = [];
 %         ax1.YTick = [];
 
-%% >>>>>>>>>> Median distance from walls
+%%%%%%%%%%%%%%%% Median distance from walls
     xnow = xnow+205;
     ynow = ynow;
 
@@ -1033,7 +1020,7 @@
         text(0.1,0.9,sprintf('BVC model'),'HorizontalAlignment','left','VerticalAlignment','bottom','FontSize',9,'Color',p2.Color,'Units','normalized')
         text(0.1,0.8,sprintf('Uniform'),'HorizontalAlignment','left','VerticalAlignment','bottom','FontSize',9,'Color','k','Units','normalized')
 
-%% >>>>>>>>>> Firing rate vs distance from closest boundary
+%%%%%%%%%%%%%%%% Firing rate vs distance from closest boundary
     xnow = xnow+180;
     ynow = ynow;
 
@@ -1207,7 +1194,7 @@
         % keyboard
 
         % keyboard
-%% >>>>>>>>>> Save the overall figure
+%%%%%%%%%%%%%%%% Save the overall figure
     if 1
         fname = [config.fig_dir '\Fig 5.png']; 
         if fast_figs

@@ -1,22 +1,31 @@
-% function PIT_over_glm
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> DESCRIPTION
-% PIT_fig_1_v1  figure script written for:
-% Grieves, Duvelle and Taube (202X) 
-%
-% See also: GIT_audit
+% PIT_over_glm
+% Fig S10 for Grieves, Duvelle and Jeffery (2026) Hippocampal place cells map
+% terrain geometry independently of behaviour
+% Reviewer requested, GLM, residuals and stats 
+% 
+% SEE ALSO GIT_audit
 
-% HISTORY:
-% version 1.0.0, Release 06/11/23 Code conception
+% HISTORY
 %
-% Author: Roddy Grieves
-% Dartmouth College, Moore Hall
-% eMail: roddy.m.grieves@dartmouth.edu
-% Copyright 2023 Roddy Grieves
+% version 1.0.0, Release 06/02/23 Code conception
+% version 2.0.0, Release 15/04/26 Publication release
+%
+% NOTES
+% 
+% 1. This script require the summary dataset:
+%   https://doi.org/10.5281/zenodo.17634454
+%
+% 2. This script is intended to be run via the control function GIT_audit
+%
+% AUTHOR 
+%
+% Roddy Grieves
+% University of Glasgow, Sir James Black Building
+% Neuroethology and Spatial Cognition Lab
+% eMail: roddy.grieves@glasgow.ac.uk
+% Copyright 2026 Roddy Grieves
 
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Heading 3
-%% >>>>>>>>>>>>>>>>>>>> Heading 2
-%% >>>>>>>>>> Heading 1
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> INPUT ARGUMENTS CHECK
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INPUT ARGUMENTS CHECK
     % Create figure
     fig_now = figure('Units','pixels','Position',[50 50 210.*3 297.*3],'visible','on');
     set(gcf,'InvertHardCopy','off'); % gives the figure a grey background but means it will save white lines as white    
@@ -47,7 +56,7 @@ end
 
 clumaa = PIT_correlations(config,pidx,clumaa,posdata,0);
 
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> FUNCTION BODY
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FUNCTION BODY
 
 % Dependent variable
 repetition_score = clumaa.repetition_score(pidx & clumaa.partn==2,1); % repetition score, all place cells, ridges
@@ -104,7 +113,7 @@ percentR2 = (partialR2 / R2_full) * 100;
 T_contrib = table(predictors, partialR2, percentR2,'VariableNames', {'Predictor','PartialR2','PercentOfTotalR2'})
 
 % keyboard
-%% >>>>>>>>>> Save the overall figure
+%%%%%%%%%%%%%%%% Save the overall figure
     if 1
         fname = [config.fig_dir '\Fig S11a.png']; 
         if fast_figs

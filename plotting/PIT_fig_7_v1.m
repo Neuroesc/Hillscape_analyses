@@ -1,22 +1,32 @@
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> DESCRIPTION
-% PIT_fig_1_v1  figure script written for:
-% Grieves, Duvelle and Taube (202X) 
-%
-% See also: GIT_audit
+% PIT_supp_fig_7_v1
+% Fig S9 for Grieves, Duvelle and Jeffery (2026) Hippocampal place cells map
+% terrain geometry independently of behaviour
+% Directionality and Pitch coding vs repetition score
+% 
+% SEE ALSO GIT_audit
 
-% HISTORY:
-% version 1.0.0, Release 06/11/23 Code conception
+% HISTORY
 %
-% Author: Roddy Grieves
-% Dartmouth College, Moore Hall
-% eMail: roddy.m.grieves@dartmouth.edu
-% Copyright 2023 Roddy Grieves
+% version 1.0.0, Release 06/02/23 Code conception
+% version 2.0.0, Release 15/04/26 Publication release
+%
+% NOTES
+% 
+% 1. This script require the summary dataset:
+%   https://doi.org/10.5281/zenodo.17634454
+%
+% 2. This script is intended to be run via the control function GIT_audit
+%
+% AUTHOR 
+%
+% Roddy Grieves
+% University of Glasgow, Sir James Black Building
+% Neuroethology and Spatial Cognition Lab
+% eMail: roddy.grieves@glasgow.ac.uk
+% Copyright 2026 Roddy Grieves
 
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Heading 3
-%% >>>>>>>>>>>>>>>>>>>> Heading 2
-%% >>>>>>>>>> Heading 1
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> INPUT ARGUMENTS CHECK
-%% >>>>>>>>>> Check that correlations and shuffles are complete
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INPUT ARGUMENTS CHECK
+%%%%%%%%%%%%%%%% Check that correlations and shuffles are complete
     clumaa = PIT_correlations(config,pidx,clumaa,posdata,0);
     fs = [15 10];
 
@@ -27,8 +37,8 @@
         set(gcf,'InvertHardCopy','off'); % gives the figure a grey background but means it will save white lines as white    
         set(gcf,'color','w'); % makes the background colour white
 
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> FUNCTION BODY
-%% >>>>>>>>>> Example cells (low azimuth stability)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FUNCTION BODY
+%%%%%%%%%%%%%%%% Example cells (low azimuth stability)
         xnow = 30;
         ynow = 720;
         xsiz = 107;
@@ -108,7 +118,7 @@
             end
         end
 % return
-%% >>>>>>>>>> Example cells (high repetition score)
+%%%%%%%%%%%%%%%% Example cells (high repetition score)
         xnow = 30;
         ynow = ynow-170;
         xsiz = 107;
@@ -174,7 +184,7 @@
     
         end
 
-%% >>>>>>>>>> Azimuth correlation results
+%%%%%%%%%%%%%%%% Azimuth correlation results
         xnow = xnow+20;
         ynow = ynow-140;
         fname = [config.data_out_dir 'PIT_correlations_azimuth_shuffles.mat'];
@@ -233,7 +243,7 @@
             leg(8).Children.FaceColor = a4.FaceColor;
 
 
-%% >>>>>>>>>> Between session correlation results (Cohen's d values)
+%%%%%%%%%%%%%%%% Between session correlation results (Cohen's d values)
         % create axis
         ax = axes('Units','pixels','Position',[ax2.Position(1)+ax2.Position(3)+50 ynow 50 100]);
             % ah = add_panel_title('b',sprintf(''),'yoffset',0,'xoffset',-20,'width',400);
@@ -295,7 +305,7 @@
 
                 axis off
 
-%% >>>>>>>>>> Relationship azimuth stability repetition score
+%%%%%%%%%%%%%%%% Relationship azimuth stability repetition score
         xnow = xnow+380;
         ynow = ynow;
     
@@ -366,7 +376,7 @@
 % [p,a,s] = anova1(ds,gs,'off')
                 keyboard
 
-%% >>>>>>>>>> Save the overall figure
+%%%%%%%%%%%%%%%% Save the overall figure
         if 1
             fname = [config.fig_dir '\Fig S8.png']; 
             if fast_figs
@@ -385,15 +395,15 @@
     end
 
 
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> INPUT ARGUMENTS CHECK
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INPUT ARGUMENTS CHECK
 %% Parse inputs
     % Create figure
     fig_now = figure('Units','pixels','Position',[50 50 210.*3 297.*3],'visible','on');
     set(gcf,'InvertHardCopy','off'); % gives the figure a grey background but means it will save white lines as white    
     set(gcf,'color','w'); % makes the background colour white
 
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> FUNCTION BODY
-%% >>>>>>>>>> Example cells (low azimuth stability)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FUNCTION BODY
+%%%%%%%%%%%%%%%% Example cells (low azimuth stability)
     xnow = 40;
     ynow = 720;
     xsiz = 107;
@@ -495,7 +505,7 @@
         end
     end
 
-%% >>>>>>>>>> Example cells (high repetition score)
+%%%%%%%%%%%%%%%% Example cells (high repetition score)
     xnow = 40;
     ynow = ynow-270;
     xsiz = 107;
@@ -582,7 +592,7 @@
             % ax3b.XTickLabelRotation = 0;
     end
 
-%% >>>>>>>>>> Azimuth correlation results
+%%%%%%%%%%%%%%%% Azimuth correlation results
     xnow = xnow+20;
     ynow = ynow-280;
     fname = [config.data_out_dir 'PIT_correlations_pitch_shuffles.mat'];
@@ -640,7 +650,7 @@
         leg(7).Children.FaceColor = a3.FaceColor;
         leg(8).Children.FaceColor = a4.FaceColor;
 
-%% >>>>>>>>>> Between session correlation results (Cohen's d values)
+%%%%%%%%%%%%%%%% Between session correlation results (Cohen's d values)
     % create axis
     ax = axes('Units','pixels','Position',[ax2.Position(1)+ax2.Position(3)+50 ynow 50 130]);
         % ah = add_panel_title('b',sprintf(''),'yoffset',0,'xoffset',-20,'width',400);
@@ -702,7 +712,7 @@
 
             axis off
 
-%% >>>>>>>>>> Relationship azimuth stability repetition score
+%%%%%%%%%%%%%%%% Relationship azimuth stability repetition score
     xnow = xnow+380;
     ynow = ynow;
 
@@ -773,7 +783,7 @@
             text(0.5,1,sprintf('Density'),'HorizontalAlignment','center','VerticalAlignment','bottom','FontSize',axc.FontSize,'Units','normalized') 
 
 
-% %% >>>>>>>>>> 3DHD correlation results
+% %%%%%%%%%%%%%%%% 3DHD correlation results
 %     xnow = 40;
 %     ynow = 100;
 %     fname = [config.data_out_dir 'PIT_correlations_3dhd_shuffles.mat'];
@@ -826,7 +836,7 @@
 %         leg(7).Children.FaceAlpha = a4.FaceAlpha;
 %         leg(8).Children.FaceAlpha = a5.FaceAlpha;
 % 
-% %% >>>>>>>>>> Relationship azimuth stability repetition score
+% %%%%%%%%%%%%%%%% Relationship azimuth stability repetition score
 %     xnow = 40;
 %     ynow = ynow;
 % 
@@ -869,7 +879,7 @@
 % 
 %         return
 keyboard
-%% >>>>>>>>>> Save the overall figure
+%%%%%%%%%%%%%%%% Save the overall figure
     if 1
         fname = [config.fig_dir '\Fig S9.png']; 
         if fast_figs

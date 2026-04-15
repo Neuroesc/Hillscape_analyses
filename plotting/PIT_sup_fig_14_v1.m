@@ -1,45 +1,31 @@
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> DESCRIPTION
-% FUNCTION  analysis function written for:
-% Grieves, Duvelle and Taube (202X) 
-%
-% USAGE:
-%       [out] = template(in) process with default settings
+% PIT_supp_fig_14_v1
+% Fig S7 for Grieves, Duvelle and Jeffery (2026) Hippocampal place cells map
+% terrain geometry independently of behaviour
+% Field to wall, angle plots
 % 
-%       [out] = template(in,optional1) process using optional argument 1
-% 
-%       [out] = template(___,Name,Value,...) process with Name-Value pairs used to control aspects 
-%       of the process
-% 
-%       Parameters include:
-% 
-%       'param1'          -   (default = X) Scalar value, parameter to do something
-% 
-%       'param2'          -   (default = X) Scalar value, parameter to do something
-% 
-% INPUT:
-%       in    - input as a vector
-%
-% OUTPUT:
-%       out   - output as a vector
-%
-% EXAMPLES:
-%       % run function using default values
-%       out = template(in,varargin)
-%
-% See also: GIT_audit
+% SEE ALSO GIT_audit
 
-% HISTORY:
-% version 1.0.0, Release 16/02/23 Code conception
+% HISTORY
 %
-% Author: Roddy Grieves
-% Dartmouth College, Moore Hall
-% eMail: roddy.m.grieves@dartmouth.edu
-% Copyright 2021 Roddy Grieves
+% version 1.0.0, Release 06/02/23 Code conception
+% version 2.0.0, Release 15/04/26 Publication release
+%
+% NOTES
+% 
+% 1. This script require the summary dataset:
+%   https://doi.org/10.5281/zenodo.17634454
+%
+% 2. This script is intended to be run via the control function GIT_audit
+%
+% AUTHOR 
+%
+% Roddy Grieves
+% University of Glasgow, Sir James Black Building
+% Neuroethology and Spatial Cognition Lab
+% eMail: roddy.grieves@glasgow.ac.uk
+% Copyright 2026 Roddy Grieves
 
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Heading 3
-%% >>>>>>>>>>>>>>>>>>>> Heading 2
-%% >>>>>>>>>> Heading 1
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> INPUT ARGUMENTS CHECK
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INPUT ARGUMENTS CHECK
 %% Parse inputs
     % Create figure
     fig_now = figure('Units','pixels','Position',[50 50 210.*3 297.*3],'visible','on');
@@ -48,7 +34,7 @@
     fsiz = 9;
     fs = [15 10];
 
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> FUNCTION BODY
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FUNCTION BODY
 
         % collect data
         ucis = unique(clumaa.uci(pidx));
@@ -111,7 +97,7 @@
             datn(pp) = { dat };
         end
 
-%% >>>>>>>>>> Diagram explaining field to wall angle
+%%%%%%%%%%%%%%%% Diagram explaining field to wall angle
     xnow = 50;
     ynow = 600;
     k = 1.5;
@@ -163,7 +149,7 @@
         end
         text(10,0,'Closest wall','HorizontalAlignment','left','VerticalAlignment','top','FontSize',8)
 
-%% >>>>>>>>>> field-to-wall angle vs distance from closest boundary
+%%%%%%%%%%%%%%%% field-to-wall angle vs distance from closest boundary
     xnow = 50;
     ynow = ynow-150;
 
@@ -387,7 +373,7 @@
             axt.YLim = [0 1];        
             [result1,result2] = plotsigbrackets(ds,gs,'bracket_text_y_gap_coeff',-1.4,'bracket_y_base',axt.YLim(2)*1.05,'plot_omnibus',1,'omnibus_text_y_gap_coeff',2);
 
-%% >>>>>>>>>> Field density vs distance from closest boundary
+%%%%%%%%%%%%%%%% Field density vs distance from closest boundary
     xnow = xnow+310;
     ynow = ynow-210;
 
@@ -429,7 +415,7 @@
         leg(4).Children.FaceColor = a2.FaceColor;
 
         % keyboard
-%% >>>>>>>>>> Save the overall figure
+%%%%%%%%%%%%%%%% Save the overall figure
     if 1
         fname = [config.fig_dir '\Fig S6.png']; 
         if fast_figs

@@ -1,19 +1,31 @@
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> DESCRIPTION
-% FUNCTION  analysis function written for:
-% Grieves, Duvelle and Taube (2024) 
+% PIT_supp_fig_5_v1
+% Fig S2 for Grieves, Duvelle and Jeffery (2026) Hippocampal place cells map
+% terrain geometry independently of behaviour
+% Rat and cell stats, histology  
+% 
+% SEE ALSO GIT_audit
 
-% HISTORY:
-% version 1.0.0, Release 16/02/23 Code conception
+% HISTORY
 %
-% Author: Roddy Grieves
-% Dartmouth College, Moore Hall
-% eMail: roddy.m.grieves@dartmouth.edu
-% Copyright 2021 Roddy Grieves
+% version 1.0.0, Release 06/02/23 Code conception
+% version 2.0.0, Release 15/04/26 Publication release
+%
+% NOTES
+% 
+% 1. This script require the summary dataset:
+%   https://doi.org/10.5281/zenodo.17634454
+%
+% 2. This script is intended to be run via the control function GIT_audit
+%
+% AUTHOR 
+%
+% Roddy Grieves
+% University of Glasgow, Sir James Black Building
+% Neuroethology and Spatial Cognition Lab
+% eMail: roddy.grieves@glasgow.ac.uk
+% Copyright 2026 Roddy Grieves
 
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Heading 3
-%% >>>>>>>>>>>>>>>>>>>> Heading 2
-%% >>>>>>>>>> Heading 1
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> INPUT ARGUMENTS CHECK
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INPUT ARGUMENTS CHECK
 %% Parse inputs
     % Create figure
     fig_now = figure('Units','pixels','Position',[50 50 210.*3 297.*3],'visible','on');
@@ -21,7 +33,7 @@
     set(gcf,'color','w'); % makes the background colour white
     fs = [15 10];
 
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> FUNCTION BODY
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FUNCTION BODY
     clumaa.rat = cell(size(clumaa,1),1);
     for ii = 1:size(clumaa,1)
         uci = clumaa.uci{ii};
@@ -29,7 +41,7 @@
         clumaa.rat{ii} = info{1};
     end
 
-%% >>>>>>>>>> Cells per rat
+%%%%%%%%%%%%%%%% Cells per rat
     xnow = 50;
     ynow = 650;
 
@@ -59,7 +71,7 @@
             text(rr,c_num(rr)+3,sprintf('%.1f%%',c_num(rr)./sum(c_num(:)).*100),'FontSize',8,'HorizontalAlignment','center','VerticalAlignment','bottom');
         end
 
-%% >>>>>>>>>> Sessions per rat
+%%%%%%%%%%%%%%%% Sessions per rat
     xnow = xnow+270;
 
     % sessions per rat
@@ -87,7 +99,7 @@
             text(rr,s_num(rr)+0.25,sprintf('%.1f%%',s_num(rr)./sum(s_num(:)).*100),'FontSize',8,'HorizontalAlignment','center','VerticalAlignment','bottom');
         end
 
-%% >>>>>>>>>> Cell activity per maze
+%%%%%%%%%%%%%%%% Cell activity per maze
     xnow = 50;
     ynow = ynow-270;
 
@@ -126,7 +138,7 @@
         text(s3-s2,-s3+s2,sprintf('%s only (N = %d)  ',maze_names{2},v(3)),'HorizontalAlignment','right','VerticalAlignment','top','FontSize',fsiz,'Color',p3.FaceColor);
         text(mean([s3-s2,-s1]),mean([s1,-s3+s2]),sprintf('Both\n(N = %d)',v(2)),'HorizontalAlignment','center','VerticalAlignment','middle','FontSize',fsiz);
 % keyboard
-%% >>>>>>>>>> Fields per maze
+%%%%%%%%%%%%%%%% Fields per maze
     xnow = xnow+260;
 
     % cells per maze
@@ -162,7 +174,7 @@
         text(s3-s2,-s3+s2,sprintf('%s only (N = %d)  ',maze_names{2},v(3)),'HorizontalAlignment','right','VerticalAlignment','top','FontSize',fsiz,'Color',p3.FaceColor);
         text(mean([s3-s2,-s1]),mean([s1,-s3+s2]),sprintf('Both\n(N = %d)',v(2)),'HorizontalAlignment','center','VerticalAlignment','middle','FontSize',fsiz);
 
-%% >>>>>>>>>> Histology
+%%%%%%%%%%%%%%%% Histology
     xnow = 50;
     ynow = ynow-390;
 
@@ -192,7 +204,7 @@
             text(0,1,sprintf('Rat %d',rn(ii)),'FontSize',8,'HorizontalAlignment','left','VerticalAlignment','bottom');            
     end
 % keyboard
-%% >>>>>>>>>> Save the overall figure
+%%%%%%%%%%%%%%%% Save the overall figure
     if 1
         fname = [config.fig_dir '\Fig S1.png']; 
         if fast_figs

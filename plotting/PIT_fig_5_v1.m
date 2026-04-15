@@ -1,21 +1,33 @@
 %% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> DESCRIPTION
-% PIT_fig_1_v1  figure script written for:
-% Grieves, Duvelle and Taube (202X) 
-%
-% See also: GIT_audit
+% PIT_fig_5_v1
+% Fig 4 for Grieves, Duvelle and Jeffery (2026) Hippocampal place cells map
+% terrain geometry independently of behaviour
+% Repetition example cells, autocorrelations, repetition score   
+% 
+% SEE ALSO GIT_audit
 
-% HISTORY:
+% HISTORY
+%
 % version 1.0.0, Release 06/11/23 Code conception
+% version 2.0.0, Release 15/04/26 Publication release
 %
-% Author: Roddy Grieves
-% Dartmouth College, Moore Hall
-% eMail: roddy.m.grieves@dartmouth.edu
-% Copyright 2023 Roddy Grieves
+% NOTES
+% 
+% 1. This script require the summary dataset:
+%   https://doi.org/10.5281/zenodo.17634454
+%
+% 2. This script is intended to be run via the control function GIT_audit
+%
+% AUTHOR 
+%
+% Roddy Grieves
+% University of Glasgow, Sir James Black Building
+% Neuroethology and Spatial Cognition Lab
+% eMail: roddy.grieves@glasgow.ac.uk
+% Copyright 2026 Roddy Grieves
 
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Heading 3
-%% >>>>>>>>>>>>>>>>>>>> Heading 2
-%% >>>>>>>>>> Heading 1
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> INPUT ARGUMENTS CHECK
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INPUTS
+%%%%%%%%%%%%%%%% ARGUMENT CHECK
 %% Parse inputs
     % Create figure
     fig_now = figure('Units','pixels','Position',[50 50 210.*3 297.*3],'visible','on');
@@ -25,8 +37,8 @@
 
     mapset.binsize = 32; % (mm) firing rate map bin siz
 
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> FUNCTION BODY
-%% >>>>>>>>>> Example cells
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FUNCTION BODY
+%%%%%%%%%%%%%%%% Example cells
     xnow = 20;
     ynow = 780;
     xsiz = [90, 10]; % size, buffer
@@ -286,7 +298,7 @@
     %     text(0,1,sprintf('%.1f',ax3.CLim(2)),'HorizontalAlignment','left','VerticalAlignment','bottom','FontSize',axc.FontSize,'Units','normalized')
     %     text(0,0,sprintf('%.1f',ax3.CLim(1)),'HorizontalAlignment','left','VerticalAlignment','top','FontSize',axc.FontSize,'Units','normalized')
 
-%% >>>>>>>>>> repetition score
+%%%%%%%%%%%%%%%% repetition score
     xnow = 50;
     ynow = ynow-320;
 
@@ -326,7 +338,7 @@
             [result1,result2] = plotsigbrackets(ds,gs,'bracket_text_y_gap_coeff',-1.4);
             % N = [sum(~isnan(v1(:))) sum(~isnan(v2a(:))) sum(~isnan(v2b(:))) sum(~isnan(v3(:)))];
 
-%% >>>>>>>>>> Repetition vs behavioural anisotropy
+%%%%%%%%%%%%%%%% Repetition vs behavioural anisotropy
     %% count repeating cells per rat
     clumaa.rat = cell(size(clumaa,1),1);
     clumaa.ratn = NaN(size(clumaa,1),1);    
@@ -456,7 +468,7 @@
 %     % [r,p] = corr(vprop(:),m(:),'rows','pairwise','type','Spearman')
 % % keyboard
 
-%% >>>>>>>>>> repetition (autocorrelation plots)
+%%%%%%%%%%%%%%%% repetition (autocorrelation plots)
     xnow = 45;
     ynow = ynow-290;
     xbuff = 25;
@@ -570,7 +582,7 @@
         text(1,0.5,sprintf(' %.1f',ax2.CLim(2)),'HorizontalAlignment','left','VerticalAlignment','middle','FontSize',axc.FontSize,'Units','normalized')
         text(0.5,1,sprintf('Correlation'),'HorizontalAlignment','center','VerticalAlignment','bottom','FontSize',axc.FontSize,'Units','normalized')
 
-%% >>>>>>>>>> Example cells
+%%%%%%%%%%%%%%%% Example cells
     % find which cells to plot  
     v2 = clumaa.ratemap_planar(pidx & clumaa.partn==2); % hills data
     v2idx = clumaa.repetition_score(pidx & clumaa.partn==2,1); % hills data
@@ -625,7 +637,7 @@
         text(1,0.5,sprintf(' Max'),'HorizontalAlignment','left','VerticalAlignment','middle','FontSize',axc.FontSize,'Units','normalized')
         text(0.5,1.8,sprintf('Firing rate (Hz)'),'FontSize',axc.FontSize,'HorizontalAl','center','Units','normalized')
 
-%% >>>>>>>>>> repetition (field plots)
+%%%%%%%%%%%%%%%% repetition (field plots)
     % repetition scores
     var = 'repetition_score';
     % rs_cutoff = -inf;
@@ -715,7 +727,7 @@
         text(1,0.5,sprintf(' %.1f',ax2.CLim(2)),'HorizontalAlignment','left','VerticalAlignment','middle','FontSize',axc.FontSize,'Units','normalized')
         text(0.5,1,sprintf('Norm. rate (z)'),'HorizontalAlignment','center','VerticalAlignment','bottom','FontSize',axc.FontSize,'Units','normalized')
 
-%% >>>>>>>>>> Field distribution along hills
+%%%%%%%%%%%%%%%% Field distribution along hills
     ynow = ynow-ysiz+50;
     xnow = xnow;
 
@@ -759,7 +771,7 @@
         text(0,1.05,sprintf('D = %.1f, {\\itp} = %.2f',k,p),'Units','normalized','HorizontalAlignment','left','FontSize',8,'Color','k','VerticalAlignment','bottom','rotation',0)
 % keyboard
 
-%% >>>>>>>>>> Field distribution along hills
+%%%%%%%%%%%%%%%% Field distribution along hills
     ynow = ynow-135;
     xnow = xnow;
 
@@ -813,8 +825,7 @@
         % numel(v1p)
         text(0,1.05,sprintf('D = %.1f, {\\itp} = %.2f',k,p),'Units','normalized','HorizontalAlignment','left','FontSize',8,'Color','k','VerticalAlignment','bottom','rotation',0)
 
-        % keyboard
-%% >>>>>>>>>> Save the overall figure
+%%%%%%%%%%%%%%%% Save the overall figure
     if 1
         fname = [config.fig_dir '\Fig 4.png']; 
         if fast_figs

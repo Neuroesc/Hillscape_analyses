@@ -1,21 +1,32 @@
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> DESCRIPTION
-% PIT_fig_1_v1  figure script written for:
-% Grieves, Duvelle and Taube (202X) 
-%
-% See also: GIT_audit
+% PIT_fig_3_v4
+% Fig 3 for Grieves, Duvelle and Jeffery (2026) Hippocampal place cells map
+% terrain geometry independently of behaviour
+% Field elongation, field orientation, anisotropy analysis
+% 
+% SEE ALSO GIT_audit
 
-% HISTORY:
+% HISTORY
+%
 % version 1.0.0, Release 06/11/23 Code conception
+% version 2.0.0, Release 15/04/26 Publication release
 %
-% Author: Roddy Grieves
-% Dartmouth College, Moore Hall
-% eMail: roddy.m.grieves@dartmouth.edu
-% Copyright 2023 Roddy Grieves
+% NOTES
+% 
+% 1. This script require the summary dataset:
+%   https://doi.org/10.5281/zenodo.17634454
+%
+% 2. This script is intended to be run via the control function GIT_audit
+%
+% AUTHOR 
+%
+% Roddy Grieves
+% University of Glasgow, Sir James Black Building
+% Neuroethology and Spatial Cognition Lab
+% eMail: roddy.grieves@glasgow.ac.uk
+% Copyright 2026 Roddy Grieves
 
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Heading 3
-%% >>>>>>>>>>>>>>>>>>>> Heading 2
-%% >>>>>>>>>> Heading 1
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> INPUT ARGUMENTS CHECK
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INPUTS
+%%%%%%%%%%%%%%%% ARGUMENT CHECK
 %% Parse inputs
     warning('off','MATLAB:legend:IgnoringExtraEntries')
 
@@ -26,8 +37,8 @@
     fs = [15 10];
     cmap_now = cmocean('balance');
 
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> FUNCTION BODY
-%% >>>>>>>>>> elongation (distribution)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FUNCTION BODY
+%%%%%%%%%%%%%%%% elongation (distribution)
     xnow = 50;
     ynow = 720;
 
@@ -125,7 +136,7 @@
             text(xvals(xx),max(y(:)),sprintf('%.1f',xvals(xx)),'FontSize',8,'HorizontalAlignment','center','VerticalAlignment','bottom')
         end
 
-%% >>>>>>>>>> orientation analysis results        
+%%%%%%%%%%%%%%%% orientation analysis results        
     xnow = xnow+320;
     ynow = ynow;
 
@@ -260,7 +271,7 @@
         % text(-93,110,'Y','HorizontalAlignment','center','VerticalAlignment','bottom','FontSize',8,'Color',[.5 .5 .5])
         % text(-53,70,'X','HorizontalAlignment','left','VerticalAlignment','middle','FontSize',8,'Color',[.5 .5 .5])
 
-%% >>>>>>>>>> Average field anisotropy
+%%%%%%%%%%%%%%%% Average field anisotropy
     xnow = -5;
     ynow = ynow-180;
     xbuff = 210;
@@ -379,7 +390,7 @@
         end
         colormap(ax2e,c);
 
-%% >>>>>>>>>> Behaviour anisotropy map 
+%%%%%%%%%%%%%%%% Behaviour anisotropy map 
     ynow = ynow-160;
 
     var = 'anisotropy_map';
@@ -448,7 +459,7 @@
         text(1,0.5,sprintf(' %.1f',ax1.CLim(2)),'HorizontalAlignment','left','VerticalAlignment','middle','FontSize',axc.FontSize,'Units','normalized')
         text(-0.3,1.5,sprintf('Anisotropy score:'),'HorizontalAlignment','right','VerticalAlignment','middle','FontSize',axc.FontSize,'Units','normalized')
 
-%% >>>>>>>>>> Field to wall angle, expected maps
+%%%%%%%%%%%%%%%% Field to wall angle, expected maps
     % collect data
     ucis = unique(clumaa.uci(pidx));
     datn = cell(1,3);
@@ -523,7 +534,7 @@
         datn(pp) = { dmap };
     end
 
-%% >>>>>>>>>> Expected anisotropy map (walls only)
+%%%%%%%%%%%%%%%% Expected anisotropy map (walls only)
     ynow = ynow-160;
 
     % plot arena
@@ -572,7 +583,7 @@
         text(0,0,sprintf('%s, simulation',maze_names{3}),'Units','normalized','HorizontalAlignment','left','FontSize',8,'Color','k','VerticalAlignment','top','rotation',0)
 
 
-%% >>>>>>>>>> Expected anisotropy map (walls only)
+%%%%%%%%%%%%%%%% Expected anisotropy map (walls only)
     ynow = ynow-160;
 
     % plot arena
@@ -620,8 +631,7 @@
         % text
         text(0,0,sprintf('%s, simulation',maze_names{3}),'Units','normalized','HorizontalAlignment','left','FontSize',8,'Color','k','VerticalAlignment','top','rotation',0)
 
-        % keyboard
-%% >>>>>>>>>> Save the overall figure
+%%%%%%%%%%%%%%%% Save the overall figure
     if 1
         fname = [config.fig_dir '\Fig 3.png']; 
         if fast_figs

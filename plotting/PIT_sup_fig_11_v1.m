@@ -1,21 +1,31 @@
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> DESCRIPTION
-% PIT_fig_1_v1  figure script written for:
-% Grieves, Duvelle and Taube (202X) 
-%
-% See also: GIT_audit
+% PIT_supp_fig_11_v1
+% Fig S11 for Grieves, Duvelle and Jeffery (2026) Hippocampal place cells map
+% terrain geometry independently of behaviour
+% Scatter graphs  
+% 
+% SEE ALSO GIT_audit
 
-% HISTORY:
-% version 1.0.0, Release 06/11/23 Code conception
+% HISTORY
 %
-% Author: Roddy Grieves
-% Dartmouth College, Moore Hall
-% eMail: roddy.m.grieves@dartmouth.edu
-% Copyright 2023 Roddy Grieves
+% version 1.0.0, Release 06/02/23 Code conception
+% version 2.0.0, Release 15/04/26 Publication release
+%
+% NOTES
+% 
+% 1. This script require the summary dataset:
+%   https://doi.org/10.5281/zenodo.17634454
+%
+% 2. This script is intended to be run via the control function GIT_audit
+%
+% AUTHOR 
+%
+% Roddy Grieves
+% University of Glasgow, Sir James Black Building
+% Neuroethology and Spatial Cognition Lab
+% eMail: roddy.grieves@glasgow.ac.uk
+% Copyright 2026 Roddy Grieves
 
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Heading 3
-%% >>>>>>>>>>>>>>>>>>>> Heading 2
-%% >>>>>>>>>> Heading 1
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> INPUT ARGUMENTS CHECK
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INPUT ARGUMENTS CHECK
 %% Parse inputs
     % Create figure
     fig_now = figure('Units','pixels','Position',[50 50 210.*3 297.*3],'visible','on');
@@ -23,8 +33,8 @@
     set(gcf,'color','w'); % makes the background colour white
     fs = [15 10];
 
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> FUNCTION BODY
-%% >>>>>>>>>> N fields in arena vs rep score in hills
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FUNCTION BODY
+%%%%%%%%%%%%%%%% N fields in arena vs rep score in hills
     xnow = 50;
     ynow = 700;
     xsiz = 170;
@@ -111,7 +121,7 @@
             axt.YLim = [0 1];
             [result1,result2] = plotsigbrackets(ds,gs,'bracket_text_y_gap_coeff',-1.4,'test','kw','plot_omnibus',1,'omnibus_text_y_gap_coeff',2);
 
-%% >>>>>>>>>> Field elongation in arena vs rep score in hills
+%%%%%%%%%%%%%%%% Field elongation in arena vs rep score in hills
     xnow = xnow+310;
 
     % create axis
@@ -191,7 +201,7 @@
             axt.YLim = [0 1];
             [result1,result2] = plotsigbrackets(ds,gs,'bracket_text_y_gap_coeff',-1.4,'test','anova','plot_omnibus',1,'omnibus_text_y_gap_coeff',2);
 
-%% >>>>>>>>>> Anisotropy in arena vs rep score in hills
+%%%%%%%%%%%%%%%% Anisotropy in arena vs rep score in hills
     xnow = 50;
     ynow = ynow-200;
 
@@ -303,7 +313,7 @@
             axt.YLim = [0 1];
             [result1,result2] = plotsigbrackets(ds,gs,'bracket_text_y_gap_coeff',-1.4,'test','anova','plot_omnibus',1,'omnibus_text_y_gap_coeff',2);
 
-%% >>>>>>>>>> Field area in arena vs rep score in hills
+%%%%%%%%%%%%%%%% Field area in arena vs rep score in hills
     xnow = xnow+310;
 
     % create axis
@@ -383,7 +393,7 @@
             axt.YLim = [0 1];
             [result1,result2] = plotsigbrackets(ds,gs,'bracket_text_y_gap_coeff',-1.4,'test','anova','plot_omnibus',1,'omnibus_text_y_gap_coeff',2);
 
-%% >>>>>>>>>> Field distance from wall in arena vs rep score in hills
+%%%%%%%%%%%%%%%% Field distance from wall in arena vs rep score in hills
     xnow = 50;
     ynow = ynow-200;
 
@@ -445,7 +455,7 @@
             axt.YLim = [0 1];
             [result1,result2] = plotsigbrackets(ds,gs,'bracket_text_y_gap_coeff',-1.4,'test','anova','plot_omnibus',1,'omnibus_text_y_gap_coeff',2);
 
-%% >>>>>>>>>> Field angle to wall in arena vs rep score in hills
+%%%%%%%%%%%%%%%% Field angle to wall in arena vs rep score in hills
     xnow = xnow+310;
     ynow = ynow;
 
@@ -509,7 +519,7 @@
             [result1,result2] = plotsigbrackets(ds,gs,'bracket_text_y_gap_coeff',-1.4,'test','anova','plot_omnibus',1,'omnibus_text_y_gap_coeff',2);
 
 
-%% >>>>>>>>>> Spatial info in arena vs rep score in hills
+%%%%%%%%%%%%%%%% Spatial info in arena vs rep score in hills
     xnow = 50;
     ynow = ynow-200;
     % create axis
@@ -582,7 +592,7 @@
             axt.YLim = [0 1];
             [result1,result2] = plotsigbrackets(ds,gs,'bracket_text_y_gap_coeff',-1.4,'test','anova','plot_omnibus',1,'omnibus_text_y_gap_coeff',2);
 
-%% >>>>>>>>>> Stability vs repetition hills
+%%%%%%%%%%%%%%%% Stability vs repetition hills
     xnow = xnow+310;
 
     % create axis
@@ -655,7 +665,7 @@
             [result1,result2] = plotsigbrackets(ds,gs,'bracket_text_y_gap_coeff',-1.4,'test','anova','plot_omnibus',1,'omnibus_text_y_gap_coeff',2);
 
             % keyboard
-%% >>>>>>>>>> Save the overall figure
+%%%%%%%%%%%%%%%% Save the overall figure
     if 1
         fname = [config.fig_dir '\Fig S11.png']; 
         if fast_figs

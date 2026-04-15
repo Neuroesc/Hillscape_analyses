@@ -76,7 +76,7 @@
     % downsample data if required
     if config.ds
         [lfp,t] = resample(lfp,t,config.ds,'pchip'); % use interpolation and an anti-aliasing filter to resample the signal at a uniform sample rate
-        Fs = ds; % the new sampling rate
+        Fs = config.ds; % the new sampling rate
     end
     lfp = double(lfp(:));
     t = double(t(:));

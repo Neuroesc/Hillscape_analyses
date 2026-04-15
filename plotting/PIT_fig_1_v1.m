@@ -1,21 +1,32 @@
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> DESCRIPTION
-% PIT_fig_1_v1  figure script written for:
-% Grieves, Duvelle and Taube (202X) 
-%
-% See also: GIT_audit
+% PIT_fig_1_v1
+% Fig 1 for Grieves, Duvelle and Jeffery (2026) Hippocampal place cells map
+% terrain geometry independently of behaviour
+% Schematic of hypotheses, mazes, example cells
+% 
+% SEE ALSO GIT_audit
 
-% HISTORY:
+% HISTORY
+%
 % version 1.0.0, Release 06/11/23 Code conception
+% version 2.0.0, Release 15/04/26 Publication release
 %
-% Author: Roddy Grieves
-% Dartmouth College, Moore Hall
-% eMail: roddy.m.grieves@dartmouth.edu
-% Copyright 2023 Roddy Grieves
+% NOTES
+% 
+% 1. This script require the summary dataset:
+%   https://doi.org/10.5281/zenodo.17634454
+%
+% 2. This script is intended to be run via the control function GIT_audit
+%
+% AUTHOR 
+%
+% Roddy Grieves
+% University of Glasgow, Sir James Black Building
+% Neuroethology and Spatial Cognition Lab
+% eMail: roddy.grieves@glasgow.ac.uk
+% Copyright 2026 Roddy Grieves
 
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Heading 3
-%% >>>>>>>>>>>>>>>>>>>> Heading 2
-%% >>>>>>>>>> Heading 1
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> INPUT ARGUMENTS CHECK
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INPUTS
+%%%%%%%%%%%%%%%% ARGUMENT CHECK
 %% Parse inputs
     % Create figure
     fig_now = figure('Units','pixels','Position',[50 50 210.*3 297.*3],'visible','on');
@@ -23,8 +34,8 @@
     set(gcf,'color','w'); % makes the background colour white
     fs = [15 10];
 
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> FUNCTION BODY
-%% >>>>>>>>>> Hypothesis schematics
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FUNCTION BODY
+%%%%%%%%%%%%%%%% Hypothesis schematics
     xnow = 20;
     ynow = 580;
     ax = axes('Units','pixels','Position',[xnow ynow 590 400]); ax1 = ax;
@@ -48,7 +59,7 @@
         daspect([1 1 1])
         axis off
 % keyboard
-%% >>>>>>>>>> Schematics of mazes
+%%%%%%%%%%%%%%%% Schematics of mazes
 %% arena
     xnow = 30;
     ynow = 530;
@@ -137,7 +148,7 @@
         ax.ZLim = [min(m(:,3)) max(m(:,3))];
         title(maze_names{2},'FontSize',10,'FontWeight','normal')
 % return
-%% >>>>>>>>>> Schematic of experiment procedure
+%%%%%%%%%%%%%%%% Schematic of experiment procedure
     xnow = 30;
     ynow = ynow-110;
     xbuff = 20;
@@ -175,7 +186,7 @@
         annotation('arrow', [0.36 0.46], [ya ya]); % x,y are (0–1)% x,y are normalized (0–1)
 % keyboard
 
-%% >>>>>>>>>> Histology
+%%%%%%%%%%%%%%%% Histology
 xnow = xnow+400;
 ynow = ynow-30;
     ax = axes('Units','pixels','Position',[xnow ynow 120 140]); ax1 = ax;
@@ -207,7 +218,7 @@ ynow = ynow-30;
         ax.XTick = [];
         ax.YTick = [];
 
-%% >>>>>>>>>> Example cells
+%%%%%%%%%%%%%%%% Example cells
     xnow = 20;
     ynow = ynow-115;
     xsiz = [90, 10]; % size, buffer
@@ -370,8 +381,7 @@ ynow = ynow-30;
             end
     end
 
-    keyboard
-%% >>>>>>>>>> Save the overall figure
+%%%%%%%%%%%%%%%% Save the overall figure
     if 1
         fname = [config.fig_dir '\Fig 1.png']; 
         if fast_figs

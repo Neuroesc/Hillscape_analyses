@@ -1,21 +1,31 @@
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> DESCRIPTION
-% PIT_fig_1_v1  figure script written for:
-% Grieves, Duvelle and Taube (202X) 
-%
-% See also: GIT_audit
+% PIT_supp_fig_3_v1
+% Fig S4 for Grieves, Duvelle and Jeffery (2026) Hippocampal place cells map
+% terrain geometry independently of behaviour
+% Correlations between arena and hills restricted to edges, corners and alignment 
+% 
+% SEE ALSO GIT_audit
 
-% HISTORY:
-% version 1.0.0, Release 06/11/23 Code conception
+% HISTORY
 %
-% Author: Roddy Grieves
-% Dartmouth College, Moore Hall
-% eMail: roddy.m.grieves@dartmouth.edu
-% Copyright 2023 Roddy Grieves
+% version 1.0.0, Release 06/02/23 Code conception
+% version 2.0.0, Release 15/04/26 Publication release
+%
+% NOTES
+% 
+% 1. This script require the summary dataset:
+%   https://doi.org/10.5281/zenodo.17634454
+%
+% 2. This script is intended to be run via the control function GIT_audit
+%
+% AUTHOR 
+%
+% Roddy Grieves
+% University of Glasgow, Sir James Black Building
+% Neuroethology and Spatial Cognition Lab
+% eMail: roddy.grieves@glasgow.ac.uk
+% Copyright 2026 Roddy Grieves
 
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Heading 3
-%% >>>>>>>>>>>>>>>>>>>> Heading 2
-%% >>>>>>>>>> Heading 1
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> INPUT ARGUMENTS CHECK
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INPUT ARGUMENTS CHECK
 %% Parse inputs
     % Create figure
     fig_now = figure('Units','pixels','Position',[50 50 210.*3 297.*3],'visible','on');
@@ -23,11 +33,11 @@
     set(gcf,'color','w'); % makes the background colour white
     fs = [15 10];
 
-%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> FUNCTION BODY
-%% >>>>>>>>>> Check that correlations and shuffles are complete
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FUNCTION BODY
+%%%%%%%%%%%%%%%% Check that correlations and shuffles are complete
     clumaa = PIT_correlations(config,pidx,clumaa,posdata,0);
 
-%% >>>>>>>>>> Example cells
+%%%%%%%%%%%%%%%% Example cells
     xnow = 30;
     ynow = 780;
     xsiz = [120, 20]; % size, buffer
@@ -160,7 +170,7 @@
         p2 = [0.95 0.13];
         arrow(p1,p2,'Length',10,'TipAngle',20,'Width',1); hold off;
 
-%% >>>>>>>>>> Between session correlation results
+%%%%%%%%%%%%%%%% Between session correlation results
     xnow = 60;
     ynow = ynow-310;
     fname = [config.data_out_dir 'PIT_correlations_between_shuffles.mat'];
@@ -246,7 +256,7 @@
         leg(15).Children.FaceColor = a3b.FaceColor;
         leg(16).Children.FaceColor = a4b.FaceColor;
 
-%% >>>>>>>>>> Between session correlation results (Cohen's d values)
+%%%%%%%%%%%%%%%% Between session correlation results (Cohen's d values)
     xnow = xnow+400;
 
     % create axis
@@ -294,7 +304,7 @@
             end
         end
 
-%% >>>>>>>>>> Within session correlation results, Arena 1
+%%%%%%%%%%%%%%%% Within session correlation results, Arena 1
     xnow = 60;
     ynow = ynow-220;
     fname = [config.data_out_dir 'PIT_correlations_within_shuffles.mat'];
@@ -366,7 +376,7 @@
 
         text(ax,0,1,maze_names{1},'Units','normalized','HorizontalAlignment','left','VerticalAlignment','bottom','FontSize',10,'Color','k');
 
-%% >>>>>>>>>> Within session correlation results (Cohen's d values) Arena 1
+%%%%%%%%%%%%%%%% Within session correlation results (Cohen's d values) Arena 1
     xnow = xnow+400;
 
     % create axis
@@ -411,7 +421,7 @@
             end
         end
 
-%% >>>>>>>>>> Within session correlation results, Hills
+%%%%%%%%%%%%%%%% Within session correlation results, Hills
     xnow = 60;
     ynow = ynow-150;
     fname = [config.data_out_dir 'PIT_correlations_within_shuffles.mat'];
@@ -461,7 +471,7 @@
 
         text(ax,0,1,maze_names{2},'Units','normalized','HorizontalAlignment','left','VerticalAlignment','bottom','FontSize',10,'Color','k');
 
-%% >>>>>>>>>> Within session correlation results (Cohen's d values) Hills
+%%%%%%%%%%%%%%%% Within session correlation results (Cohen's d values) Hills
     xnow = xnow+400;
 
     % create axis
@@ -508,7 +518,7 @@
         end
 
         % keyboard
-%% >>>>>>>>>> Save the overall figure
+%%%%%%%%%%%%%%%% Save the overall figure
     if 1
         fname = [config.fig_dir '\Fig S3.png']; 
         if fast_figs
