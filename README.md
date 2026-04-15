@@ -104,6 +104,7 @@ for pp = 1:3
     % poz = -posdata.pos{posdata.pos_idx==this_posdata_index}.poz_planar;
     % pox = posdata.pos{posdata.pos_idx==this_posdata_index}.pox_surficial;
     % poy = posdata.pos{posdata.pos_idx==this_posdata_index}.poy_surficial;
+    % poz = posdata.pos{posdata.pos_idx==this_posdata_index}.poz_surficial;
     % poz = -posdata.pos{posdata.pos_idx==this_posdata_index}.poz_curve;
     mf = posdata.maze_frame{posdata.pos_idx==this_posdata_index}; 
 
