@@ -7,8 +7,9 @@ Code used in the analysis and modelling of our Hillscape apparatus, to be used i
 > These functions require the [summary dataset](https://doi.org/10.5281/zenodo.17634454)
 
 # Contents
-- [Specifying data 'parts'](https://github.com/Neuroesc/klustest/blob/main/README.md#specifying-data-parts)
-- [Usage](https://github.com/Neuroesc/klustest/blob/main/README.md#usage)
+- [Code overview](https://github.com/Neuroesc/Hillscape_analyses/blob/main/README.md#code-overview)
+- [Examples](https://github.com/Neuroesc/Hillscape_analyses/blob/main/README.md#examples)
+- [Summary data file column explanation](https://github.com/Neuroesc/Hillscape_analyses/blob/main/README.md#summary-data-file-column-explanation)
 
 # Code overview
 The main code which controls the data analysis is `GIT_audit.m`, the file directories at the beginning of this code will need to be modified so as to load the downloaded summary dataset and set the desired output directories.
@@ -18,12 +19,135 @@ The code run_fun_for_audit.m is used to either run on individual data files (whi
 Individual codes are used to generate figures, such as PIT_fig_1_v1.m which creates figure 1. These codes are controlled by an optional switch, set these to 1 to run the individual figure codes, or multiple figure codes sequentially.
 
 # Examples
+First we load the summary datafile, which contains all of the data in a table named clumaa
+```
+load("clumaa.mat")
+```
+clumaa has one row per session (arena 1, hillscape, arena 2) for every cell, so N x 3 rows, where N is the total number of clusters analysed. Not all of the clusters in this table are place cells.
 
+We also want to extract the session data, which includes the position data, this is contained in a sub table named posdata
+```
+posdata = clumaa.Properties.CustomProperties.posdata;
+```
+posdata has one row per recording, the most important column in this table is probably pos, which contains the position data for each recording session. Note that the position data for all 3 sessions (arena 1, hillscape, arena 2) is concatenated, we will deal with this in a minute.
 
+Place cells are defined as those cells that were classified as place cells (algorithmically followed by manual curation), and their spatial information content exceeded 2 standard deviations of a shuffle, and their firing rate was greater than 0.1 Hz. We can get an index into clumaa like this:
+```
+place_cell_index = clumaa.cell_type(:,2)==3 & clumaa.planar_spatial_info_shuffles(:,2)>2 & clumaa.f_rate_hz(:,1)>0.1;
+```
+`clumaa.cell_type(:,2)==3` is the column containing the manually curated cell types, `clumaa.planar_spatial_info_shuffles(:,2)>2` are the z-scored spatial information values computed on a planar ratemap, `clumaa.f_rate_hz(:,1)>0.1` is the firing rate criteria. You could use another set of criteria if you like.
 
+Let's plot a place cell, as this will show us how to extract and align most of the data people are interested in. First, let's get a list of all the cells that were a place cell in at least one session (arena 1, hillscape, or arena 2). For this, we will use the 'uci' column, which is a list of unique cell identifiers, a cell can be identified across sessions using its uci:
+```
+place_cell_ucis = unique(clumaa.uci(place_cell_index));
+```
+place_cell_ucis should now be a cell array of 519 strings, these are the 519 place cells reported in our paper.  
 
+Let's plot cell 12 as an example, we will get the uci for place cell 12, find where clumaa.uci matches this uci and collect the ratemap_planar on this row; ratemap_planar is the earth-horizontal ratemap, or the ratemap produced when the data are projected onto the XY plane (i.e. the normal way we produce ratemaps).  
 
+Furthermore, we want to see the ratemap for each session (arena 1, hillscape, arena 2), to do this we will also extract the ratemap on rows where clumaa.partn is equal to 1, 2 or 3 - these are a convenient index of all the arena 1, hillscape and arena 2 sessions respectively.
+```
+place_cell_index = clumaa.cell_type(:,2)==3 & clumaa.planar_spatial_info_shuffles(:,2)>2 & clumaa.f_rate_hz(:,1)>0.1;
+place_cell_ucis = unique(clumaa.uci(place_cell_index));
 
+% cell we want to plot
+cell_to_plot = 12;
+
+% initialise figure
+figure
+tiledlayout('horizontal','TileSpacing','tight')
+session_names = {'Arena 1','Hillscape','Arena 2'};
+
+% get the planar ratemap for each part, for this cell
+for pp = 1:3
+    this_cell_and_part_index = ismember(clumaa.uci,place_cell_ucis{cell_to_plot}) & clumaa.partn==pp;
+    m = clumaa.ratemap_planar{this_cell_and_part_index};        
+    nexttile
+    imagesc(m)
+    daspect([1 1 1])
+    title(session_names{pp})
+    colormap('turbo')
+end
+```
+<img width="1000" alt="image" src="https://github.com/user-attachments/assets/1c05cecd-be3b-43d9-b38f-cdad9b813097" />
+
+That's great, but what if we want to plot the positions and spikes for these maps?
+
+To do this, we will retrieve the position data from posdata using `clumaa.pos_idx` which tells us which row of posdata matches each cluster's data. Remember that posdata contains the position data in a column called 'pos', but this has all of the position data for all 3 sessions, so to plot just arena 1, for example, we need to cut the data to that time period - we can do this using the information in `posdata.session_times` - see PIT_fig_1_v1 for an example of this method, where the code plots example cells for panel E. 
+
+An easier way to do this though, which is shown below, is to use the first column of `posdata.pos` which tells us which session the position data correspond to, we set all of the position data outside the session we want to plot to NaN. Now, when we plot the data that data will not be shown.
+
+What about the spikes? For these, we retrieve `clumaa.spike_index` which contains an index into `posdata.pos` and tells us which position data point corresponds to each spike. Using this, it is easy to get a position coordinate for each spike and plot these on top of the position data.
+
+Alternatively, you could retrieve `clumaa.spike_times_s` and find the nearest neighbor in the position data time column for each spike. This is how `clumaa.spike_index` is originally calculated. Some people may want to interpolate the position data for each spike time instead.
+
+```
+% cell we want to plot
+cell_to_plot = 12;
+
+% initialise figure
+figure
+tiledlayout('horizontal','TileSpacing','tight')
+session_names = {'Arena 1','Hillscape','Arena 2'};
+
+% get the planar ratemap for each part, for this cell
+for pp = 1:3
+    this_cell_and_part_index = ismember(clumaa.uci,place_cell_ucis{cell_to_plot}) & clumaa.partn==pp;
+    this_posdata_index = clumaa.pos_idx(ismember(clumaa.uci,place_cell_ucis{cell_to_plot}) & clumaa.partn==pp);
+
+    % get positions and maze frame
+    pox = posdata.pos{posdata.pos_idx==this_posdata_index}.pox;
+    poy = posdata.pos{posdata.pos_idx==this_posdata_index}.poy;
+    poz = -posdata.pos{posdata.pos_idx==this_posdata_index}.poz;
+    % pox = posdata.pos{posdata.pos_idx==this_posdata_index}.pox_planar;
+    % poy = posdata.pos{posdata.pos_idx==this_posdata_index}.poy_planar;
+    % poz = -posdata.pos{posdata.pos_idx==this_posdata_index}.poz_planar;
+    % pox = posdata.pos{posdata.pos_idx==this_posdata_index}.pox_surficial;
+    % poy = posdata.pos{posdata.pos_idx==this_posdata_index}.poy_surficial;
+    % poz = -posdata.pos{posdata.pos_idx==this_posdata_index}.poz_curve;
+    mf = posdata.maze_frame{posdata.pos_idx==this_posdata_index}; 
+
+    % set out of session data to NaN
+    pox(pos.session ~= pp,:) = NaN;
+    poy(pos.session ~= pp,:) = NaN;
+    poz(pos.session ~= pp,:) = NaN;
+
+    % get the spike index into the position data
+    spike_index = clumaa.spike_index{this_cell_and_part_index};
+
+    % plot data
+    nexttile
+    msiz = 8;
+    lwidth = 0.5;
+    pos_plot = plot3(pox,poy,poz,'Color',[.5 .5 .5],'LineWidth',lwidth); hold on;
+    spk_plot = plot3(pox(spike_index),poy(spike_index),poz(spike_index),'Marker','.','Color','r','MarkerSize',msiz,'LineStyle','none');
+    plot3(mf(:,1),mf(:,2),mf(:,3),'Color','k');
+
+    % axis settings
+    daspect([1 1 1])
+    axis off xy
+    ax = gca;
+    ax.XLim = [min(mf(:,1)) max(mf(:,1))];
+    ax.YLim = [min(mf(:,2)) max(mf(:,2))];
+    ax.ZLim = [min(mf(:,3)) max(mf(:,3))];    
+    title(session_names{pp})  
+end
+```
+<img width="1000" alt="image" src="https://github.com/user-attachments/assets/72ff7c74-6f0d-417e-8262-6928b961221c" />
+
+Note that the position data are three-dimensional, this is because we recorded using multiple cameras. All of the triangulation has already been done for this dataset and the three-dimensional trajectory is available to use straight out of the box. 
+
+Note that in `posdata.pos` there are other projections that can be used, for example `posdata.pox_planar`, `posdata.poy_planar` and `posdata.poz_planar` give the data projected onto the x,y plane:
+
+<img width="1000" alt="image" src="https://github.com/user-attachments/assets/72cf109d-f417-481e-b27f-ae906875c7fd" />
+
+`posdata.pox_surficial`, `posdata.poy_surficial` and `posdata.poz_surficial` give the data projected onto the maze surface, then on to the x,y plane:
+
+<img width="1000" height="287" alt="image" src="https://github.com/user-attachments/assets/49eba7ce-8311-440a-b8b5-af331bef9a35" />
+
+`posdata.pox_surficial`, `posdata.poy_surficial` and `posdata.poz_curve` give the data projected onto the maze surface, this will only work for the hillscape:
+
+<img width="1000" alt="image" src="https://github.com/user-attachments/assets/22464d40-587b-4f71-b9b8-5c2433244cb6" />
 
 # Summary data file column explanation
 After downloading the [summary dataset](https://doi.org/10.5281/zenodo.17634454) you will find a Matlab table called `clumaa.mat`.
