@@ -42,9 +42,9 @@ function GIT_audit
 % Directory settings    
     config = struct;
     % You will need to edit config.main_dir to reflect the directory where you want data/figures to be saved
-    config.main_dir                                     = 'C:\Users\roddyg\OneDrive - University of Glasgow\Projects in prep\2021 Place cells irregular terrain\';
+    config.main_dir                                     = 'X:\2021 Place cells irregular terrain\';
     cd(config.main_dir);
-    config.data_dir                                     = 'X:\2021 HPC irregular terrain project'; % the raw (rat) data directories can be found here
+    config.data_dir                                     = fullfile(config.main_dir,'associated data'); % the raw (rat) data directories can be found here
     config.data_out_dir                                 = fullfile(config.main_dir,'associated data'); % output data can be saved here
     config.sname                                        = fullfile(config.data_dir,'clumaa.mat'); % location of the accumulated sdata mat file  
     config.media_out_dir                                = fullfile(config.main_dir,'associated media','outputs'); % figure directory 1, for figure parts and general media
@@ -79,6 +79,8 @@ function GIT_audit
         load(config.sname,'clumaa')
         posdata = clumaa.Properties.CustomProperties.posdata;    
     end
+    assignin('base',"posdata",posdata)
+    assignin('base',"clumaa",clumaa)
 
     % cell indices
     pidx = clumaa.cell_type(:,2)==3 & clumaa.planar_spatial_info_shuffles(:,2)>2 & clumaa.f_rate_hz(:,1)>0.1;
